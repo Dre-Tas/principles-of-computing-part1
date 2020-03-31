@@ -4,6 +4,7 @@ Clone of 2048 game.
 
 import poc_2048_testsuite
 #import poc_2048_gui
+import random
 
 # Directions, DO NOT MODIFY
 UP = 1
@@ -17,6 +18,9 @@ OFFSETS = {UP: (1, 0),
            DOWN: (-1, 0),
            LEFT: (0, 1),
            RIGHT: (0, -1)}
+
+# Other global variables
+PROBABILITY_OF_TWO = 0.9  # probability to pick 2
 
 def push_zeros(lst):
     """
@@ -62,54 +66,75 @@ class TwentyFortyEight:
         self.height = grid_height
         self.width = grid_width
 
-        self.reset()
-
-        #pass
+        # Create grid
+        self.grid = self.reset()
+        # Populate grid
+        self.new_tile()
 
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        return "hello"
+        grid = []
+        for dummy_row in range(self.height):
+            row = []
+            grid.append(row)
+            for dummy_cell in range(self.width):
+                row.append(0)
 
-    # def __str__(self):
-    #     """
-    #     Return a string representation of the grid for debugging.
-    #     """
-    #     # replace with your code
-    #     return ""
+        return grid
 
-    # def get_grid_height(self):
-    #     """
-    #     Get the height of the board.
-    #     """
-    #     # replace with your code
-    #     return 0
+    def __str__(self):
+        """
+        Return a string representation of the grid for debugging.
+        """
+        # replace with your code
+        return ""
 
-    # def get_grid_width(self):
-    #     """
-    #     Get the width of the board.
-    #     """
-    #     # replace with your code
-    #     return 0
+    def get_grid_height(self):
+        """
+        Get the height of the board.
+        """
+        return self.height
 
-    # def move(self, direction):
-    #     """
-    #     Move all tiles in the given direction and add
-    #     a new tile if any tiles moved.
-    #     """
-    #     # replace with your code
-    #     pass
+    def get_grid_width(self):
+        """
+        Get the width of the board.
+        """
+        return self.width
 
-    # def new_tile(self):
-    #     """
-    #     Create a new tile in a randomly selected empty
-    #     square.  The tile should be 2 90% of the time and
-    #     4 10% of the time.
-    #     """
-    #     # replace with your code
-    #     pass
+    def move(self, direction):
+        """
+        Move all tiles in the given direction and add
+        a new tile if any tiles moved.
+        """
+        # replace with your code
+        pass
+
+    def new_tile(self):
+        """
+        Create a new tile in a randomly selected empty
+        square.  The tile should be 2 90% of the time and
+        4 10% of the time.
+        """
+        for dummy_i in range(2):
+            # Create tile randomly
+            tile = None
+            if random.random() < PROBABILITY_OF_TWO:
+                tile = 2
+            else:
+                tile = 4
+
+            # Pick location of tile in grid
+            row_index = random.randrange(0, self.get_grid_height(), 1)
+            col_index = random.randrange(0, self.get_grid_width(), 1)
+
+            # Make sure I'm not selecting the same tile twice
+            if self.grid[row_index][col_index] == 0:
+                self.grid[row_index][col_index] = tile
+
+        pass
 
     # def set_tile(self, row, col, value):
     #     """
