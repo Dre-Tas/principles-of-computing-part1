@@ -67,30 +67,40 @@ class TwentyFortyEight:
         self.width = grid_width
 
         # Create grid
-        self.grid = self.reset()
-        # Populate grid
-        self.new_tile()
+        self.reset()
 
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        grid = []
+        self.grid = []
         for dummy_row in range(self.height):
             row = []
-            grid.append(row)
+            self.grid.append(row)
             for dummy_cell in range(self.width):
                 row.append(0)
 
-        return grid
+        for dummy_i in range(2):
+            self.new_tile()
 
     def __str__(self):
         """
         Return a string representation of the grid for debugging.
         """
-        # replace with your code
-        return ""
+        str_grid = ""
+
+        for row in range(self.height):
+            line = self.grid[row]
+            for cell in range(self.width):
+                if cell < self.width - 1:
+                    str_grid += str(line[cell]) + ", "
+                else:
+                    str_grid += str(line[cell])
+            str_grid += "\n"
+        
+        # print str_grid
+        return str_grid
 
     def get_grid_height(self):
         """
@@ -118,21 +128,20 @@ class TwentyFortyEight:
         square.  The tile should be 2 90% of the time and
         4 10% of the time.
         """
-        for dummy_i in range(2):
-            # Create tile randomly
-            tile = None
-            if random.random() < PROBABILITY_OF_TWO:
-                tile = 2
-            else:
-                tile = 4
+        # Create tile randomly
+        tile = None
+        if random.random() < PROBABILITY_OF_TWO:
+            tile = 2
+        else:
+            tile = 4
 
-            # Pick location of tile in grid
-            row_index = random.randrange(0, self.get_grid_height(), 1)
-            col_index = random.randrange(0, self.get_grid_width(), 1)
+        # Pick location of tile in grid
+        row_index = random.randrange(0, self.get_grid_height(), 1)
+        col_index = random.randrange(0, self.get_grid_width(), 1)
 
-            # Make sure I'm not selecting the same tile twice
-            if self.grid[row_index][col_index] == 0:
-                self.grid[row_index][col_index] = tile
+        # Make sure I'm not selecting the same tile twice
+        if self.grid[row_index][col_index] == 0:
+            self.grid[row_index][col_index] = tile
 
         pass
 
