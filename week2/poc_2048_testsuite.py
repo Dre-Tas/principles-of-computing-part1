@@ -12,26 +12,26 @@ def run_suite(game_class):
     suite = poc_simpletest.TestSuite()
     
     # Test reset function
-    suite.run_test(len(game_class.grid),
-        game_class.height,
+    suite.run_test(len(game_class._grid),
+        game_class._height,
         "Test reset() - height:")
 
-    suite.run_test(len(game_class.grid[0]),
-        game_class.width,
+    suite.run_test(len(game_class._grid[0]),
+        game_class._width,
         "Test reset() - height:")
 
-    suite.run_test(sum([len(cell) for cell in game_class.grid]),
+    suite.run_test(sum([len(cell) for cell in game_class._grid]),
         game_class.get_grid_height() * game_class.get_grid_width(),
         "Test reset() - cells:")
 
-    suite.run_test(game_class.grid[0][0], 0, "Test reset() - cell:")
+    suite.run_test(game_class._grid[0][0], 0, "Test reset() - cell:")
 
     # Test new_tile function
 
     # Check that the tiles have been created
     # by checking that there aren't only 0 tiles
     sum_of_tiles = 0
-    for row in game_class.grid:
+    for row in game_class._grid:
         for cell in row:
             sum_of_tiles += cell
 
@@ -62,7 +62,31 @@ def run_suite(game_class):
     True,
     "Test __str__() - has 2 non zero items:")
 
+    # # Test directions dictionary
+    # list_of_row_index = []
+    # for i in game_class.move("DOWN"):
+    #     list_of_row_index.append(i[0])
+    
+    # suite.run_test(True if all((game_class._height - 1) for x in list_of_row_index) else False,
+    #     True,
+    #     "Test move() - row index is 3:")
 
+    # list_of_col_index = []
+    # for i in game_class.move("RIGHT"):
+    #     list_of_col_index.append(i[0])
+    
+    # suite.run_test(True if all((game_class._width - 1) for x in list_of_col_index) else False,
+    #     True,
+    #     "Test move() - col index is 3:")
+
+    # Directions, DO NOT MODIFY
+    UP = 1
+    DOWN = 2
+    LEFT = 3
+    RIGHT = 4
+
+    print game_class.__str__()
+    print game_class.move(UP)
     
     suite.report_results()
   
