@@ -3,7 +3,7 @@ Monte Carlo Tic-Tac-Toe Player
 """
 
 import random
-import poc_ttt_gui
+# import poc_ttt_gui
 import poc_ttt_provided as provided
 
 # Constants for Monte Carlo simulator
@@ -17,9 +17,18 @@ def mc_trial(board, player):
     """
     Plays a random game (random moves) starting with given player and then alternating players.
     """
+    # Populate until one wins
+    while board.check_win() == None:
+        # Player to play in one of ramaining empty squares (still playable)
+        square_options = board.get_empty_squares()
+        pick_square = random.choice(square_options)
+        board.move(pick_square[0], pick_square[1], player)
+        # Switch player for next move
+        player = provided.switch_player(player)
 
-
-    pass
+    # print board
+    # print board.check_win()
+    
 
 def mc_update_scores(scores,board,player):
     """
@@ -48,3 +57,7 @@ def mc_move(board,player,trials):
 
 # provided.play_game(mc_move, NTRIALS, False)        
 # poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
+
+board = provided.TTTBoard(3)
+mc_trial(board, provided.PLAYERX)
+# print board  
