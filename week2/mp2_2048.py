@@ -3,7 +3,7 @@ Clone of 2048 game.
 """
 
 # import poc_2048_testsuite
-#import poc_2048_gui
+# import poc_2048_gui
 import random
 
 # Directions, DO NOT MODIFY
@@ -163,6 +163,9 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
+        # Track if merge changes something in grid:
+        tile_changed = False
+
         initial_indices_list = self._precomputed_indices[direction]
         offset = OFFSETS[direction]
 
@@ -189,13 +192,15 @@ class TwentyFortyEight:
                     tlps_list.append(index_tpl)
                     tile_values.append(self._grid[index_tpl[0]][index_tpl[1]])
             merged_tiles = merge(tile_values)
+            if merged_tiles != tile_values:
+                tile_changed = True
+            
             for index in range(len(merged_tiles)):
                 self._grid[tlps_list[index][0]][tlps_list[index][1]] = merged_tiles[index]
 
-
-        # TEMP for testing
-        # return self._grid
-
+        # Add a new tile to continue game
+        if tile_changed:
+            self.new_tile()
 
     def new_tile(self):
         """
@@ -210,13 +215,16 @@ class TwentyFortyEight:
         else:
             tile = 4
 
-        # Pick location of tile in grid
-        row_index = random.randrange(0, self.get_grid_height(), 1)
-        col_index = random.randrange(0, self.get_grid_width(), 1)
+        # Similar to do while but avoids infinite loop by only checking grid's scope
+        for dummy_i in range(self._width * self._height):
+            # Pick location of tile in grid
+            row_index = random.randrange(0, self.get_grid_height(), 1)
+            col_index = random.randrange(0, self.get_grid_width(), 1)
 
-        # Make sure I'm not selecting the same tile twice
-        if self._grid[row_index][col_index] == 0:
-            self._grid[row_index][col_index] = tile
+            # Make sure I'm not selecting the same tile twice
+            if self._grid[row_index][col_index] == 0:
+                self._grid[row_index][col_index] = tile
+                break
 
     def set_tile(self, row, col, value):
         """
@@ -231,5 +239,5 @@ class TwentyFortyEight:
 
         return self._grid[row][col]
 
-# poc_2048_testsuite.run_suite(TwentyFortyEight(4, 6))
-#poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+# poc_2048_testsuite.run_suite(TwentyFortyEight(4, 4))
+# poc_2048_gui.run_gui(TwentyFortyEight(4, 4))

@@ -24,8 +24,6 @@ def run_suite(game_class):
         game_class.get_grid_height() * game_class.get_grid_width(),
         "Test reset() - cells:")
 
-    suite.run_test(game_class._grid[0][0], 0, "Test reset() - cell:")
-
     # Test new_tile function
 
     # Check that the tiles have been created
@@ -38,6 +36,8 @@ def run_suite(game_class):
     suite.run_test(True if sum_of_tiles > 2 else False,
         True,
         "Test new_tile() - zero cells:")
+
+    # suite.run_test()
 
     # Test _str_
     suite.run_test(type(game_class.__str__()),
@@ -62,22 +62,10 @@ def run_suite(game_class):
     True,
     "Test __str__() - has 2 non zero items:")
 
-    # # Test directions dictionary
-    # list_of_row_index = []
-    # for i in game_class.move("DOWN"):
-    #     list_of_row_index.append(i[0])
-    
-    # suite.run_test(True if all((game_class._height - 1) for x in list_of_row_index) else False,
-    #     True,
-    #     "Test move() - row index is 3:")
 
-    # list_of_col_index = []
-    # for i in game_class.move("RIGHT"):
-    #     list_of_col_index.append(i[0])
-    
-    # suite.run_test(True if all((game_class._width - 1) for x in list_of_col_index) else False,
-    #     True,
-    #     "Test move() - col index is 3:")
+#------------------------------------------------------------------------
+
+    obj = game_class
 
     # Directions, DO NOT MODIFY
     UP = 1
@@ -85,8 +73,7 @@ def run_suite(game_class):
     LEFT = 3
     RIGHT = 4
 
-    print game_class.__str__()
-    print game_class.move(UP)
+    # print game_class.move(UP)
     
     suite.report_results()
   
