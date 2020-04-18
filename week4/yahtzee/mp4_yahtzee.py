@@ -7,8 +7,6 @@ Simplifications:  only allow discard and roll, only score against upper level
 # import codeskulptor
 # codeskulptor.set_timeout(20)
 
-# import yahtzee_testsuite
-
 from collections import Counter
 
 def gen_all_sequences(outcomes, length):
@@ -113,7 +111,18 @@ def strategy(hand, num_die_sides):
     Returns a tuple where the first element is the expected score and
     the second element is a tuple of the dice to hold
     """
-    return (0.0, ())
+    possible_holds = gen_all_holds(hand)
+
+    max_val = 0
+    best_hold = ()
+
+    for hold in possible_holds:
+        expected = expected_value(hold, num_die_sides, len(hand) - len(hold))
+        if max_val < expected:
+            max_val = expected
+            best_hold = hold
+
+    return (max_val, best_hold)
 
 def run_example():
     """
@@ -130,9 +139,10 @@ def run_example():
 #import poc_holds_testsuite
 #poc_holds_testsuite.run_suite(gen_all_holds)
                                        
-# yahtzee_testsuite.run_suite()
-print score((6, 1, 1, 1, 5))
-print score((2, 2, 2, 4, 4, 5, 6))
-print expected_value((2, 2), 6, 2)
-print gen_all_holds((1, 1, 5))
+# print score((6, 1, 1, 1, 5))
+# print score((2, 2, 2, 4, 4, 5, 6))
+# print expected_value((2, 2), 6, 2)
 # print gen_all_holds((1, 1, 1, 5, 6))
+# print strategy((1, 1, 1, 5, 6), 6)
+print strategy((1,), 6)
+print strategy((1, 2), 6) #expected (5.05555555555, ())
